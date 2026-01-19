@@ -8,11 +8,6 @@ OpenCode plugin that adds a Librarian subagent for remote code research. It is d
 
 ## Install
 
-```bash
-bun install
-bun run build
-```
-
 Add the plugin to `~/.config/opencode/opencode.json`:
 
 ```json
