@@ -24,7 +24,10 @@ export const LIBRARIAN_PROMPT_METADATA = {
 }
 
 export function createLibrarianAgent(model: string = DEFAULT_MODEL): AgentConfig {
-  const restrictions = createAgentToolRestrictions(["write", "edit"])
+  const restrictions = createAgentToolRestrictions({
+    denyTools: ["write", "edit"],
+    allowPermissions: ["external_directory"],
+  })
 
   return {
     description: LIBRARIAN_DESCRIPTION,

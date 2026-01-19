@@ -6,4 +6,8 @@ export interface NewPermissionFormat {
     permission: Record<string, PermissionValue>;
 }
 export type VersionAwareRestrictions = LegacyToolsFormat | NewPermissionFormat;
-export declare function createAgentToolRestrictions(denyTools: string[]): VersionAwareRestrictions;
+export interface AgentPermissionOptions {
+    denyTools: string[];
+    allowPermissions?: string[];
+}
+export declare function createAgentToolRestrictions(options: AgentPermissionOptions): VersionAwareRestrictions;

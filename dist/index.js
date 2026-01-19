@@ -239,10 +239,13 @@ var LIBRARIAN_PROMPT = [
 `);
 
 // src/permission.ts
-function createAgentToolRestrictions(denyTools) {
+function createAgentToolRestrictions(options) {
+  const { denyTools, allowPermissions = [] } = options;
   if (supportsNewPermissionSystem()) {
+    const deniedEntries = denyTools.map((tool) => [tool, "deny"]);
+    const allowedEntries = allowPermissions.map((perm) => [perm, "allow"]);
     return {
-      permission: Object.fromEntries(denyTools.map((tool) => [tool, "deny"]))
+      permission: Object.fromEntries([...deniedEntries, ...allowedEntries])
     };
   }
   return {
@@ -255,7 +258,10 @@ function supportsNewPermissionSystem() {
 
 // src/agents.ts
 function createLibrarianAgent(model = DEFAULT_MODEL) {
-  const restrictions = createAgentToolRestrictions(["write", "edit"]);
+  const restrictions = createAgentToolRestrictions({
+    denyTools: ["write", "edit"],
+    allowPermissions: ["external_directory"]
+  });
   return {
     description: LIBRARIAN_DESCRIPTION,
     mode: "subagent",
